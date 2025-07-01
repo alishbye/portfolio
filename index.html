@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- GSAP CDN -->
+    <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+ <style>
+  .shadow-glow {
+  box-shadow: 0 0 25px 5px rgba(68, 58, 71, 0.7), 0 0 50px 10px rgba(115, 21, 139, 0.4);
+}
+
+  /* Tailwind's custom CSS file or <style> block */
+.neon-glass {
+  background-color: rgba(10, 10, 10, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow:
+    0 0 10px rgba(147, 51, 234, 0.3),
+    0 0 20px rgba(147, 51, 234, 0.3),
+    0 0 30px rgba(147, 51, 234, 0.3),
+    0 0 40px rgba(147, 51, 234, 0.3);
+  border-radius: 1rem;
+}
+
+
+     /*----------------New Css-----Start  */
+  #stack {
+      position: relative;
+      height: 320px;
+      width: 100%;
+      max-width: 400px;
+      margin: auto;
+      perspective: 1000px;
+      overflow: visible;
+    }
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 320px;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      user-select: none;
+      cursor: pointer;
+      box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.4);
+      background-color: #713c7b; /* slate-800 */
+      color: rgb(17, 3, 3);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 1rem;
+      transition: 
+        transform 0.8s cubic-bezier(0.65, 0, 0.35, 1),
+        opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+      will-change: transform, opacity;
+    }
+    .card img {
+     object-fit: contain;
+      width: 100%;
+      height: 220px;
+      border-radius: 0.5rem;
+      margin-bottom: 0.75rem;
+      user-select: none;
+      pointer-events: none;
+    }
+
+.l-cards {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.c-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  width: 100%;
+  height: 90vh;
+  min-height: 600px;
+
+  /* Frosted Glass Effect */
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  border-radius: 12px;
+
+  /* Neon Glow */
+  box-shadow:
+  0 0 10px rgba(147, 51, 234, 0.3),
+  0 0 20px rgba(147, 51, 234, 0.3),
+  0 0 30px rgba(147, 51, 234, 0.3),
+  0 0 40px rgba(147, 51, 234, 0.3);
+
+
+  margin-top: 20px;
+}
+
+
+    .c-card__title {
+      font-size: 36px;
+    }
+   
+    .c-card__excerpt {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+   
+    .c-card__cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 32px;
+     
+      a {
+        width: max-content;
+        padding: 12px 24px;
+        border: 1px solid black;
+        color: black;
+        font-size: 16px;
+        text-decoration: none;
+      }
+    }
+  
+   
+  .c-card__figure {
+    position: relative;
+    overflow: hidden;
+ 
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+.spacer {
+  width: 100%;
+  height: 100vh;
+}
+ 
+ /*----------------newcss-----endddddd  */
+ 
+ 
+:root {
+  --color-dark: #202330;
+  --color-white: #fff;
+}
+ 
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+      font-family: 'Playfair Display', serif;
+}
+ 
+    html, body {
+       
+      width: 100%;
+       /* prevents horizontal scrollbar */
+      position: relative;
+    }
+ 
+    #stars-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%; /* was 100vw – changed to avoid overflow */
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+ 
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkling 1.5s infinite ease-in-out, moveStars 5s linear infinite;
+    }
+ 
+    @keyframes twinkling {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
+ 
+    /* ✅ Limited movement to prevent scroll overflow */
+    @keyframes moveStars {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(20vw, 20vh); }
+    }
+ 
+    .scale-fade h1 {
+      opacity: 0;
+      transform: scale(0);
+      animation: scaleFadeIn 2s forwards;
+    }
+ 
+    @keyframes scaleFadeIn {
+      0% { opacity: 0; transform: scale(0); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+ 
+    .hover\:shadow-border-glow:hover {
+      box-shadow: 0 0 8px rgba(0, 123, 255, 1), 0 0 12px rgba(0, 123, 255, 0.6);
+    }
+ 
+    .focus\:shadow-border-glow:focus {
+      box-shadow: 0 0 8px rgba(0, 123, 255, 1), 0 0 12px rgba(0, 123, 255, 0.6);
+    }
+ 
+    .hover\:border-blue-500:hover {
+      border-color: #3b82f6;
+    }
+ 
+    .focus\:border-blue-500:focus {
+      border-color: #3b82f6;
+    }
+    #glow-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+  background: radial-gradient(
+    circle closest-side, /* Centered circle effect */
+    rgba(0, 0, 0, 0.95) 30%,          /* Dark center to keep focus */
+    rgba(118, 80, 137, 0.6) 70%,       /* Glowing purple nebula */
+    rgba(9, 1, 9, 0.4) 70%,      /* Soft purple halo */
+    rgba(36, 34, 37, 0.2) 100%     /* Faint purple to outer edges */
+  );
+  filter: blur(70px);                /* Make the gradient more dreamy */
+}
+ </style>
+</head>
+ 
+<body class="bg-black text-white">
+    <div id="stars-container"></div>
+    <div id="glow-background"></div>
+<div id="stars-container"></div>
+ 
+    <nav id="navbar" class="sticky top-0 z-50 bg-black p-4 shadow-md">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="text-white text-2xl font-bold">
+                <a href="#">ALISHBA</a>
+            </div>
+            <div class="hidden lg:flex flex-1 justify-center space-x-10">
+                <a href="#" class="text-white hover:text-gray-300 text-[20px]">Home</a>
+                <a href="#" class="text-white hover:text-gray-300 text-[20px]">About</a>
+                <a href="#" class="text-white hover:text-gray-300 text-[20px]">Services</a>
+            </div>
+            <div class="hidden lg:block">
+                <button
+                    class="relative inline-flex items-center justify-center px-8 py-2 overflow-hidden tracking-tighter text-white bg-purple-600 rounded-md group transition duration-300">
+                    <!-- Expanding white background on hover -->
+                    <span
+                        class="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56"></span>
+ 
+                    <!-- Left decorative SVG -->
+                    <span class="absolute bottom-0 left-0 h-full -ml-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-auto h-full opacity-100 object-stretch"
+                            viewBox="0 0 487 487">
+                            <path fill-opacity=".1" fill-rule="nonzero" fill="#FFF"
+                                d="M0 .3c67 2.1 134.1 4.3 186.3 37 52.2 32.7 89.6 95.8 112.8 150.6 23.2 54.8 32.3 101.4 61.2 149.9 28.9 48.4 77.7 98.8 126.4 149.2H0V.3z" />
+                        </svg>
+                    </span>
+ 
+                    <!-- Right decorative SVG -->
+                    <span class="absolute top-0 right-0 w-12 h-full -mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="object-cover w-full h-full"
+                            viewBox="0 0 487 487">
+                            <path fill-opacity=".1" fill-rule="nonzero" fill="#FFF"
+                                d="M487 486.7c-66.1-3.6-132.3-7.3-186.3-37s-95.9-85.3-126.2-137.2c-30.4-51.8-49.3-99.9-76.5-151.4C70.9 109.6 35.6 54.8.3 0H487v486.7z" />
+                        </svg>
+                    </span>
+ 
+                    <!-- Background gradient overlay -->
+                    <span
+                        class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-white"></span>
+ 
+                    <!-- Text -->
+                    <span
+                        class="relative text-[20px] font-semibold group-hover:text-purple-600 transition duration-300">Contact</span>
+                </button>
+ 
+            </div>
+            <div class="block lg:hidden">
+                <button id="hamburger" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18M3 12h18M3 18h18" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+      
+    </nav>
+ 
+    <div id="mobileMenu"
+        class="lg:hidden hidden opacity-0 scale-95 transition-all duration-300 flex flex-col items-center bg-white text-black py-4">
+        <a href="#" class="hover:text-gray-700 text-[18px] w-full text-center">Home</a>
+        <a href="#" class="hover:text-gray-700 text-[18px] border-t border-black w-full text-center pt-4 mt-4">About</a>
+        <a href="#"
+            class="hover:text-gray-700 text-[18px] border-t border-black w-full text-center pt-4 mt-4">Services</a>
+        <div class="border-t border-black w-full flex justify-center pt-4 mt-4">
+            <button
+                class="px-6 py-2 bg-black text-white rounded-md text-[18px] transform transition duration-200 hover:scale-105">
+                Contact
+            </button>
+        </div>
+    </div>
+ <section class="relative w-full h-screen z-10">
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 translate-y-[-5%]">
+    <div class="scale-fade">
+      <h1 class="text-white text-[72px] font-bold leading-tight">HI, I'M ALISHBA.</h1>
+    </div>
+    <h2 class="text-white-500 text-[30px] mt-1 font-normal">
+      A Front-End Web Developer and UI/UX Designer
+    </h2>
+    <h3 class="text-white-500 text-[20px] mt-1 font-normal">
+      Every project is a chance to tell a story through design and interaction.<br>
+      My work bridges creativity and functionality—always aiming to make the web more beautiful and accessible.
+    </h3>
+
+    <button
+      class="inline-flex items-center px-6 py-3 border-2 border-purple-600 text-base font-medium rounded-md text-white bg-purple-600 transition duration-150 ease-in-out mt-4 shadow-lg shadow-purple-500/50 hover:bg-purple-700 hover:shadow-purple-500/70 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:shadow-purple-500/80">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none"
+        class="w-5 h-5 mr-2 -ml-1">
+        <path d="M12 4v12m8-8l-8 8-8-8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+      </svg>
+      Download CV
+    </button>
+
+    <div class="flex flex-row gap-6 mt-6">
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/" target="_blank"
+        class="group flex items-center gap-2 p-4 bg-purple-600 text-white rounded-md transition-all duration-300 ease-in-out hover:bg-purple-700 hover:translate-y-1 hover:rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" class="w-6 h-6">
+          <path
+            d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83 0 53.4a53.4 53.4 0 01106.8 0c0 29.6-24.09 54.7-53.01 54.7zM447.9 448h-92.4V302.4c0-34.7-12.5-58.4-43.8-58.4-23.9 0-38.1 16.1-44.4 31.6-2.3 5.5-2.9 13.1-2.9 20.8V448h-92.4s1.2-264.4 0-291.1h92.4v41.3c-.2.3-.5.7-.7 1h.7v-1c12.3-18.9 34.3-45.8 83.6-45.8 61 0 106.8 39.8 106.8 125.4V448z" />
+        </svg>
+        <span class="hidden group-hover:inline text-sm font-semibold">LinkedIn</span>
+      </a>
+
+      <!-- GitHub -->
+      <a href="https://github.com/" target="_blank"
+        class="group flex items-center gap-2 p-4 bg-purple-600 text-white rounded-md transition-all duration-300 ease-in-out hover:translate-y-1 hover:rounded-full hover:bg-purple-700">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="w-6 h-6">
+          <path
+            d="M12 0.296875C5.37207 0.296875 0 5.66901 0 12.2969C0 17.6641 3.43848 22.166 8.20508 23.6855C8.80508 23.7969 9.02539 23.4492 9.02539 23.1445C9.02539 22.8672 9.01367 22.1445 9.00781 21.167C5.67188 21.9043 4.96875 19.6484 4.96875 19.6484C4.42969 18.2637 3.66406 17.8906 3.66406 17.8906C2.60156 17.1602 3.74609 17.1758 3.74609 17.1758C4.92188 17.2656 5.55469 18.3945 5.55469 18.3945C6.60156 20.1406 8.29492 19.6289 8.92188 19.3398C9.03125 18.5898 9.32422 18.0664 9.64844 17.7617C7.02734 17.4609 4.28125 16.417 4.28125 11.707C4.28125 10.3711 4.76367 9.27344 5.57422 8.42188C5.44141 8.11328 5.01172 6.85547 5.70312 5.19922C5.70312 5.19922 6.72656 4.86719 9.01172 6.42578C9.98828 6.14844 11.0352 6.01172 12.082 6.00391C13.1289 6.01172 14.1758 6.14844 15.1523 6.42578C17.4375 4.86719 18.4609 5.19922 18.4609 5.19922C19.1523 6.85547 18.7227 8.11328 18.5898 8.42188C19.4062 9.27344 19.8828 10.3711 19.8828 11.707C19.8828 16.4297 17.1328 17.457 14.5039 17.7539C14.9297 18.1328 15.3125 18.8828 15.3125 20.0352C15.3125 21.7031 15.2969 22.8125 15.2969 23.1445C15.2969 23.4492 15.5117 23.8008 16.1211 23.6855C20.8926 22.1621 24.3281 17.6641 24.3281 12.2969C24.3281 5.66901 18.9551 0.296875 12 0.296875Z" />
+        </svg>
+        <span class="hidden group-hover:inline text-sm font-semibold">GitHub</span>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/15551234567" target="_blank"
+        class="group flex items-center gap-2 p-4 bg-purple-600 text-white rounded-md transition-all duration-300 ease-in-out hover:bg-purple-700 hover:translate-y-1 hover:rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="white" class="w-6 h-6">
+          <path
+            d="M380.9 97.1C339-14.2 215.9-32.3 133.5 25.1 62.4 73.4 42.1 158.7 72.2 234.4L24 464l234.6-48.1c74.4 27.4 160.3-1.2 200.6-69.4 40.7-68.9 22.6-158.5-37.3-216.4zm-106 306.3c-38.5 10.3-81.7 3.4-114.1-19.1L114 400l17.3-48.8c-24.2-35.7-29.7-81.5-13.4-121.6C150 170.5 217.3 134 288 148.1c68.8 13.7 118.9 75.5 118.9 146.7.1 85.1-81.3 149.3-132 208.6z" />
+        </svg>
+        <span class="hidden group-hover:inline text-sm font-semibold">WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+     
+ 
+   
+ 
+    <!------------ CARDS TEST SECTION ------------------ START --------------->
+
+  <!-- CARD 1 -->
+ <!-- Wrapper to center everything on the page -->
+
+
+  <!-- Heading -->
+<h2 class="text-4xl font-extrabold text-white relative top-[-6rem] text-center opacity-0 transition-opacity duration-500"
+   data-scroll="fade">MY SKILLS</h2>
+  
+  <!-- Card stack and buttons -->
+<div class="flex flex-col items-start justify-center max-w-[90%] mx-auto p-6 space-y-9 w-full max-w-[460px] relative">
+
+  <!-- Card stack moved left -->
+  <div id="stack" class="flex-shrink-0 w-full translate-x-[-14rem]"></div>
+
+  <!-- Buttons positioned to the right of the card stack -->
+<!-- Buttons positioned to the right of the card stack -->
+<div class="flex space-x-7 absolute right-[10rem] top-1/2 transform -translate-y-1/2">
+
+    <button id="prevBtn" class="w-16 h-16 rounded-full bg-white/10 text-white text-2xl flex items-center justify-center hover:bg-white/20 transition">
+      <span class="sr-only">Previous</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <button id="nextBtn" class="w-16 h-16 rounded-full bg-white/10 text-white text-2xl flex items-center justify-center hover:bg-white/20 transition">
+      <span class="sr-only">Next</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+ 
+            <!-- CARD 2 -->
+           
+          
+ 
+        <div class="spacer"></div>
+    </section>
+ 
+    <!------------ CARDS TEST SECTION ------------------ START --------------->
+ 
+ 
+    <!-- Blue Glowing Curve -->
+    <div class="glow-line"></div>
+ 
+    <!-- gsap script -->
+    <script src="/gsap.js"></script>
+    <!-- gsap script -->
+ 
+    <!-- project scripts -->
+    <script src="/scripts.js"></script>
+    <!-- project scripts -->
+ <script>
+
+
+
+const skillsHeading = document.querySelector('[data-scroll="fade"]');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('opacity-100');
+      entry.target.classList.remove('opacity-0');
+    } else {
+      entry.target.classList.add('opacity-0');
+      entry.target.classList.remove('opacity-100');
+    }
+  });
+}, {
+  threshold: 0.5 // Adjust this (0-1) to control when fading happens
+});
+
+observer.observe(skillsHeading);
+
+
+       
+   const skills = [
+  {
+    title: 'HTML',
+    name: 'HyperText Markup Language',
+    img: 'https://img.icons8.com/?size=400&id=23028&format=png&color=7950F2',
+    desc: 'The standard markup language for creating web pages.'
+  },
+  {
+    title: 'Tailwind',
+    name: 'Cascading Style Sheets',
+    img: 'https://img.icons8.com/?size=400&id=UpSCHTwpywad&format=png&color=7950F2',
+    desc: 'A CSS framework for fast, custom designs.'
+
+  },
+  {
+    title: 'JavaScript',
+    name: 'ECMAScript',
+    img: 'https://img.icons8.com/?size=400&id=106036&format=png&color=7950F2',
+    desc: 'The scripting language that brings interactivity to web pages.'
+  },
+  {
+    title: 'React',
+    name: 'ReactJS Library',
+    img: 'https://img.icons8.com/?size=400&id=58811&format=png&color=7950F2',
+    desc: 'A JavaScript library for building user interfaces.'
+  }
+];
+  const stack = document.getElementById('stack');
+const visibleCount = 3;
+let startIndex = 0;
+let isAnimating = false;
+
+function mod(n, m) {
+  return ((n % m) + m) % m;
+}
+
+function createCard(skill, zIndex, offsetY, rotateDeg, scale, opacity, translateX) {
+  const card = document.createElement('div');
+card.className = 'absolute left-0 right-0 mx-auto text-white rounded-xl p-14 w-full max-w-[500px] shadow-glow bg-gradient-to-t from-[#1a0a20] via-[#5e2d6b] to-[#f5f0ff]';
+
+
+  card.style.zIndex = zIndex;
+  card.style.opacity = opacity;
+  card.style.transform = `translateX(${translateX}px) translateY(${offsetY}px) rotate(${rotateDeg}deg) scale(${scale})`;
+  // Fixed size additions
+  card.style.height = '350px';
+  card.style.overflow = 'hidden';
+  card.style.display = 'flex';
+  card.style.flexDirection = 'column';
+  card.style.justifyContent = 'space-between';
+  
+  card.innerHTML = `
+    <div>
+      <h2 class="text-5xl font-extrabold text-black-800 mb-3 text-center">${skill.title}</h2>
+      <p class="text-xlg font-medium bold text-white-500 mb-2 text-center">${skill.name}</p>
+    </div>
+    <img src="${skill.img}" alt="${skill.title} logo" class="mx-auto h-24" />
+    <p class="text-base text-black-600 text-center mt-3">${skill.desc}</p>
+  `;
+  return card;
+}
+
+function renderStack(direction = 1) {
+  if (isAnimating) return;
+  isAnimating = true;
+
+  const fanSpreadX = 50;
+  const fanRotateDeg = 10;
+
+  const oldTopCard = stack.children[0];
+  oldTopCard.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+  oldTopCard.style.transform += ' scale(1.05) translateX(-400px)';
+  oldTopCard.style.opacity = '0';
+
+  startIndex = mod(startIndex + direction, skills.length);
+
+  setTimeout(() => {
+    stack.removeChild(oldTopCard);
+
+    const cards = Array.from(stack.children);
+
+    cards.forEach((card, i) => {
+      const offsetY = i * 4;
+      const scale = 1;
+      const rotateDeg = i === 1 ? fanRotateDeg : i === 2 ? -fanRotateDeg : 0;
+      const translateX = i === 1 ? fanSpreadX : i === 2 ? -fanSpreadX : 0;
+
+      card.style.zIndex = 3 - i;
+      card.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+      card.style.transform = `translateX(${translateX}px) translateY(${offsetY}px) rotate(${rotateDeg}deg) scale(${scale})`;
+      card.style.opacity = i === 0 ? '1' : '0.85';
+    });
+
+    const newSkillIndex = mod(startIndex + 2, skills.length);
+    const newSkill = skills[newSkillIndex];
+    const newCard = createCard(
+      newSkill,
+      1,
+      2 * 4,
+      -fanRotateDeg,
+      1,
+      '0.85',
+      -fanSpreadX
+    );
+    newCard.style.transition = 'none';
+    stack.appendChild(newCard);
+
+    isAnimating = false;
+  }, 500);
+}
+
+document.getElementById('nextBtn').onclick = () => {
+  if (isAnimating) return;
+  renderStack(1);
+};
+
+document.getElementById('prevBtn').onclick = () => {
+  if (isAnimating) return;
+  renderStack(-1);
+};
+
+// Initial render
+(function initialRender() {
+  const fanSpreadX = 50;
+  const fanRotateDeg = 10;
+
+  for (let i = 0; i < visibleCount; i++) {
+    const idx = mod(startIndex + i, skills.length);
+    const skill = skills[idx];
+
+    let translateX = 0;
+    let rotateDeg = 0;
+
+    if (i === 1) {
+      translateX = fanSpreadX;
+      rotateDeg = fanRotateDeg;
+    } else if (i === 2) {
+      translateX = -fanSpreadX;
+      rotateDeg = -fanRotateDeg;
+    }
+
+    const offsetY = i * 4;
+    const scale = 1;
+    const opacity = i === 0 ? '1' : '0.85';
+
+    const card = createCard(skill, visibleCount - i, offsetY, rotateDeg, scale, opacity, translateX);
+    stack.appendChild(card);
+  }
+})();
+  
+
+
+  
+    const navbar = document.getElementById('navbar');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add('bg-black/30', 'backdrop-blur-md');
+      navbar.classList.remove('bg-black', 'shadow-md');
+    } else {
+      navbar.classList.remove('bg-black/30', 'backdrop-blur-md');
+      navbar.classList.add('bg-black', 'shadow-md');
+    }
+  });
+
+  const starContainer = document.getElementById('stars-container');
+        const numStars = 300;
+ 
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.animationDuration = (5 + Math.random() * 5) + 's';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            starContainer.appendChild(star);
+        }
+ 
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+ 
+        hamburger.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                void mobileMenu.offsetWidth; // triggers reflow
+                mobileMenu.classList.remove('opacity-0', 'scale-95');
+                mobileMenu.classList.add('opacity-100', 'scale-100');
+            } else {
+                mobileMenu.classList.remove('opacity-100', 'scale-100');
+                mobileMenu.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            }
+        });
+ // Seleccionar todas las tarjetas y definir la distancia de stick
+const cards = gsap.utils.toArray(".c-card");
+const lastCardIndex = cards.length - 1;
+ 
+// Crear el ScrollTrigger para la primera y última tarjeta
+const firstCardST = ScrollTrigger.create({
+  trigger: cards[1],
+  start: "center center"
+});
+ 
+const lastCardST = ScrollTrigger.create({
+  trigger: cards[cards.length - 1],
+  start: "center center"
+});
+ 
+// Iterar sobre cada tarjeta
+cards.forEach((card, index) => {
+  const scale = index === lastCardIndex ? 1 : 0.5;
+  const scaleDown = gsap.to(card, {
+    scale: scale,
+  });
+ 
+  ScrollTrigger.create({
+    trigger: card,
+    start: "top top",
+    end: () => lastCardST.start,
+    pin: true,
+    pinSpacing: false,
+    scrub: 0.5,
+    ease: "none",
+    animation: scaleDown,
+    toggleActions: "restart none none reverse"
+  });
+});
+ </script>
+</body>
+ 
+</html>
+ 
+      
